@@ -44,8 +44,8 @@ public:
     return reinterpret_cast<Header *>( artdaq_Fragment_.dataBeginBytes());
   }
 
-  void set_hdr_run_number(Header::run_number_t run_number) { 
-    header_()->run_number = run_number;
+  void set_hdr_trigger_number(Header::trigger_number_t trigger_number) { 
+    header_()->trigger_number = trigger_number;
   }
 
   void resize(size_t nAdcs);
