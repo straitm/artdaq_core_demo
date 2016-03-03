@@ -28,8 +28,8 @@ void demo::ToyFragment::checkADCData(int daq_adc_bits) const {
 std::ostream & demo::operator << (std::ostream & os, ToyFragment const & f) {
   os << "ToyFragment event size: "
      << f.hdr_event_size()
-     << ", run number: "
-     << f.hdr_run_number()
+     << ", trigger number: "
+     << f.hdr_trigger_number()
      << "\n";
 
   return os;

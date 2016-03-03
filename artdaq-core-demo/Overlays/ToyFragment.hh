@@ -2,13 +2,18 @@
 #define artdaq_demo_Overlays_ToyFragment_hh
 
 #include "artdaq-core/Data/Fragment.hh"
-#include "cetlib/exception.h"
 
 #include <ostream>
-#include <vector>
 
 // Implementation of "ToyFragment", an artdaq::Fragment overlay class
-// used for pedagogical purposes
+// used for pedagogical purposes.
+//
+// The intention of this class is to provide an example of how an Overlay
+// can be constructed for a hypothetical 16-bit ADC module.  In this 
+// example, the ADC data can have either 12 or 14 bits of meaningful
+// information per 16-bit word.  (This is just a characteristic of this
+// example.  Separate classes could certainly be used to overlay the two
+// types of ADC data.)
 
 namespace demo {
   class ToyFragment;
@@ -20,16 +25,17 @@ namespace demo {
 class demo::ToyFragment {
   public:
 
-  // The ToyFragment represents its data through the adc_t type, which
-  // is a typedef of an unsigned 16-bit integer. Note that since there
-  // are two types of ToyFragment ("TOY1" and "TOY2", declared in
-  // FragmentType.hh), the ADC type needs to be large enough to hold
-  // the ADC count with the highest number of bits.
-
-  typedef uint16_t adc_t;
-
-  // The "Metadata" struct is used to store info primarily related to
-  // the upstream hardware environment from where the fragment came
+  // The "Metadata" struct declared here is used to define the set of
+  // information that is stored in the "metadata" section of artdaq::Fragments
+  // that contain ToyFragments in their payload.
+  // This struct is not used by the ToyFragment Overlay class itself; it is
+  // defined here simply as a convenience.
+  // The types of information that are typically stored in artdaq::Fragment
+  // metadata blocks are things like hardware serial numbers or values of
+  // an interesting configuration parameter. These things are generally *not*
+  // part of the data read out from the electronics hardware in each event,
+  // hence the need to store them outside the block of data that the hardware
+  // provides.
 
   // "data_t" is a typedef of the fundamental unit of data the
   // metadata structure thinks of itself as consisting of; it can give
@@ -50,31 +56,38 @@ class demo::ToyFragment {
   static_assert (sizeof (Metadata) == Metadata::size_words * sizeof (Metadata::data_t), "ToyFragment::Metadata size changed");
 
 
-  // The "Header" struct contains "metadata" specific to the fragment
-  // which is not hardware-related
+  // ToyFragment is intended to represent/interpret data that has an
+  // inherent size of 16 bits (unsigned). This is represented by the
+  // adc_t type that is declared here.
+
+  typedef uint16_t adc_t;
+
+  // The "Header" struct is used to interpret the header information that is
+  // created by the hardware and *is* part of the data blob that is read from
+  // the hardware for each event.
 
   // Header::data_t -- not to be confused with Metadata::data_t ! --
-  // describes the standard size of a data type not just for the
-  // header data, but ALSO the physics data beyond it; the size of the
-  // header in units of Header::data_t is given by "size_words", and
-  // the size of the fragment beyond the header in units of
-  // Header::data_t is given by "event_size"
-
-  // Notice only the first 28 bits of the first 32-bit unsigned
-  // integer in the Header is used to hold the event_size ; this means
-  // that you can't represent a fragment larger than 2**28 units of
-  // data_t, or 1,073,741,824 bytes
+  // describes the standard size of a data type in the header.
+  // In this example, it is ALSO used to describe the size of the physics data
+  // beyond the header. This is not a general requirement for Overlay classes;
+  // it is simply the choice that was made for this example.
+  // The size of the header in units of Header::data_t is given by "size_words",
+  // and the size of the fragment beyond the header in units of
+  // Header::data_t is given by "event_size". Again, this is simply an
+  // artifact of this example. A real-life hardware module may pack its data
+  // differently, and any "size" fields in that real-life data could include
+  // the size of any header information provided by the hardware.
 
   struct Header {
     typedef uint32_t data_t;
 
     typedef uint32_t event_size_t;  
-    typedef uint32_t run_number_t;
+    typedef uint32_t trigger_number_t;
 
     event_size_t event_size : 28;
     event_size_t unused_1   :  4;
 
-    run_number_t run_number : 32;
+    trigger_number_t trigger_number : 32;
 
     static size_t const size_words = 2ul; // Units of Header::data_t
   };
@@ -89,12 +102,19 @@ class demo::ToyFragment {
   // const getter functions for the data in the header
 
   Header::event_size_t hdr_event_size() const { return header_()->event_size; } 
-  Header::run_number_t hdr_run_number() const { return header_()->run_number; }
+  Header::trigger_number_t hdr_trigger_number() const { return header_()->trigger_number; }
   static constexpr size_t hdr_size_words() { return Header::size_words; }
 
   // The number of ADC values describing data beyond the header
   size_t total_adc_values() const {
     return (hdr_event_size() - hdr_size_words()) * adcs_per_word_();
+  }
+
+  // The specified ADC value
+  adc_t adc_value(uint32_t index) {
+    // Simple way to handle index out of bounds - better ways are surely possible
+    if (index >= total_adc_values()) {return 0xffff;}
+    return dataBegin()[index];
   }
 
   // Start of the ADC values, returned as a pointer to the ADC type
