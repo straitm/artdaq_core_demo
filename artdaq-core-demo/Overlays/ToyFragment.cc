@@ -14,10 +14,10 @@ namespace {
 
 void demo::ToyFragment::checkADCData(int daq_adc_bits) const {
   demo::ToyFragment::adc_t const * adcPtr(findBadADC(daq_adc_bits));
-  if (adcPtr != dataEnd()) {
+  if (adcPtr != dataEndADCs()) {
     throw cet::exception("IllegalADCVal")
         << "Illegal value of ADC word #"
-        << (adcPtr - dataBegin())
+        << (adcPtr - dataBeginADCs())
         << ": 0x"
         << std::hex
         << *adcPtr

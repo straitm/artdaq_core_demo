@@ -26,16 +26,16 @@ class demo::ToyFragment {
   public:
 
   // The "Metadata" struct declared here is used to define the set of
-  // information that is stored in the "metadata" section of artdaq::Fragments
-  // that contain ToyFragments in their payload.
-  // This struct is not used by the ToyFragment Overlay class itself; it is
-  // defined here simply as a convenience.
-  // The types of information that are typically stored in artdaq::Fragment
-  // metadata blocks are things like hardware serial numbers or values of
-  // an interesting configuration parameter. These things are generally *not*
-  // part of the data read out from the electronics hardware in each event,
-  // hence the need to store them outside the block of data that the hardware
-  // provides.
+  // information that is stored in the "metadata" section of
+  // artdaq::Fragments that contain ToyFragments in their payload.
+  // This struct is not used by the ToyFragment Overlay class itself;
+  // it is defined here simply as a convenience.  The types of
+  // information that are typically stored in artdaq::Fragment
+  // metadata blocks are things like hardware serial numbers or values
+  // of an interesting configuration parameter. These things are
+  // generally *not* part of the data read out from the electronics
+  // hardware in each event, hence the need to store them outside the
+  // block of data that the hardware provides.
 
   // "data_t" is a typedef of the fundamental unit of data the
   // metadata structure thinks of itself as consisting of; it can give
@@ -48,7 +48,7 @@ class demo::ToyFragment {
 
     data_t board_serial_number : 16;
     data_t num_adc_bits : 8;
-    data_t unused : 8; // 16 + 8 + 8 == 32 bits
+    data_t unused : 8; 
     
     static size_t const size_words = 1ul; // Units of Metadata::data_t
   };
@@ -114,17 +114,17 @@ class demo::ToyFragment {
   adc_t adc_value(uint32_t index) {
     // Simple way to handle index out of bounds - better ways are surely possible
     if (index >= total_adc_values()) {return 0xffff;}
-    return dataBegin()[index];
+    return dataBeginADCs()[index];
   }
 
   // Start of the ADC values, returned as a pointer to the ADC type
-  adc_t const * dataBegin() const {
+  adc_t const * dataBeginADCs() const {
     return reinterpret_cast<adc_t const *>(header_() + 1);
   }
 
   // End of the ADC values, returned as a pointer to the ADC type
-  adc_t const * dataEnd() const {
-    return dataBegin() + total_adc_values();
+  adc_t const * dataEndADCs() const {
+    return dataBeginADCs() + total_adc_values();
   }
 
   // Functions to check if any ADC values are corrupt
@@ -135,13 +135,13 @@ class demo::ToyFragment {
   // permitted ADC value
 
   adc_t const * findBadADC(int daq_adc_bits) const {
-    return std::find_if(dataBegin(), dataEnd(), 
+    return std::find_if(dataBeginADCs(), dataEndADCs(), 
 			[&](adc_t const adc) -> bool { 
 			  return (adc >> daq_adc_bits); });
   }
 
   bool fastVerify(int daq_adc_bits) const {
-    return (findBadADC(daq_adc_bits) == dataEnd());
+    return (findBadADC(daq_adc_bits) == dataEndADCs());
   };
 
   // Defined in ToyFragment.cc, this throws if any ADC appears corrupt
