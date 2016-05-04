@@ -18,8 +18,8 @@ fcldir      -
 
 #
 product		version		optional
-artdaq_core	v1_04_29
-cetbuildtools	v4_18_02	-	only_for_build
+artdaq_core	v1_04_30
+cetbuildtools	v5_01_03	-	only_for_build
 end_product_list
 
 # e6  - with gcc 4.9.1 and -std=c++1y
