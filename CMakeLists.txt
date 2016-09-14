@@ -16,11 +16,18 @@ IF (NOT CETBUILDTOOLS_VERSION)
     MESSAGE (FATAL_ERROR "ERROR: setup cetbuildtools to get the cmake modules")
 ENDIF()
 
-set(CMAKE_MODULE_PATH 
-        $ENV{ART_DIR}/Modules
-        $ENV{CETBUILDTOOLS_DIR}/Modules
-        ${CMAKE_MODULE_PATH})
-
+if( DEFINED ENV{CANVAS_DIR} )
+set(CMAKE_MODULE_PATH
+  $ENV{ART_DIR}/Modules
+  $ENV{CANVAS_DIR}/Modules
+	$ENV{CETBUILDTOOLS_DIR}/Modules
+	${CMAKE_MODULE_PATH})
+else()
+set(CMAKE_MODULE_PATH
+  $ENV{ART_DIR}/Modules
+	$ENV{CETBUILDTOOLS_DIR}/Modules
+	${CMAKE_MODULE_PATH})
+endif()
 
 include(CetCMakeEnv)
 cet_cmake_env()
@@ -47,7 +54,7 @@ find_ups_product( art v1_06_00 )
 #find_ups_product( messagefacility v1_10_00 )
 #find_ups_product( cpp0x v1_03_00 )
 find_ups_product( cetlib v1_03_00 )
-#find_ups_root( v5_34_00 )
+find_ups_root( v5_34_00 )
 find_ups_boost( v1_50_0 filesystem
                         program_options
                         unit_test_framework
