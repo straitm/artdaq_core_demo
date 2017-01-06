@@ -3,16 +3,12 @@
 #include "artdaq-core/Data/Fragment.hh"
 
 namespace demo {
-    std::vector<std::string> const names { "MISSED", "V1495", "V1720", "V1724", "V1190", "TOY1", "TOY2", "ASCII", "UDP", "UNKNOWN" };
+    std::vector<std::string> const names { "MISSED", "TOY1", "TOY2", "ASCII", "UDP", "UNKNOWN" };
 
   namespace detail {
 
     enum FragmentType : artdaq::Fragment::type_t
     { MISSED = artdaq::Fragment::FirstUserFragmentType,
-        V1495,
-        V1720,
-        V1724,
-        V1190,
 	TOY1,
 	TOY2,
         ASCII,
