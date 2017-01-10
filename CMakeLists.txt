@@ -18,18 +18,11 @@ IF (NOT CETBUILDTOOLS_VERSION)
     MESSAGE (FATAL_ERROR "ERROR: setup cetbuildtools to get the cmake modules")
 ENDIF()
 
-if( DEFINED ENV{CANVAS_DIR} )
 set(CMAKE_MODULE_PATH
   $ENV{ART_DIR}/Modules
   $ENV{CANVAS_DIR}/Modules
 	$ENV{CETBUILDTOOLS_DIR}/Modules
 	${CMAKE_MODULE_PATH})
-else()
-set(CMAKE_MODULE_PATH
-  $ENV{ART_DIR}/Modules
-	$ENV{CETBUILDTOOLS_DIR}/Modules
-	${CMAKE_MODULE_PATH})
-endif()
 
 include(CetCMakeEnv)
 cet_cmake_env()
@@ -61,13 +54,6 @@ find_ups_boost( v1_50_0 filesystem
                         program_options
                         unit_test_framework
  )
-
-# Needed if using old art with new cetbuildtools / CMake.
-check_ups_version(art "$ENV{ART_VERSION}" v1_11_00 PRODUCT_OLDER_VAR have_old_art)
-if (have_old_art)
-  cmake_policy(SET CMP0046 OLD)
-endif()
-unset(have_old_art)
 
 # macros for art_dictionary and simple_plugin
 include(ArtMake)
