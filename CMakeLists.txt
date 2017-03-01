@@ -19,7 +19,6 @@ IF (NOT CETBUILDTOOLS_VERSION)
 ENDIF()
 
 set(CMAKE_MODULE_PATH
-  $ENV{ART_DIR}/Modules
   $ENV{CANVAS_DIR}/Modules
 	$ENV{CETBUILDTOOLS_DIR}/Modules
 	${CMAKE_MODULE_PATH})
@@ -44,7 +43,7 @@ cet_report_compiler_flags()
 find_ups_product( cetbuildtools v3_03_00 )
 #find_ups_product( artdaq v0_04_02 )
 find_ups_product( artdaq_core v1_00_00 )
-find_ups_product( art v1_06_00 )
+find_ups_product( canvas v1_00_00 )
 #find_ups_product( fhiclcpp v2_16_00 )
 #find_ups_product( messagefacility v1_10_00 )
 #find_ups_product( cpp0x v1_03_00 )
@@ -56,7 +55,6 @@ find_ups_boost( v1_50_0 filesystem
  )
 
 # macros for art_dictionary and simple_plugin
-include(ArtMake)
 include(CetTest)
 
 # source
