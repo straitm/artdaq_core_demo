@@ -21,6 +21,7 @@ ENDIF()
 set(CMAKE_MODULE_PATH
   $ENV{CANVAS_DIR}/Modules
 	$ENV{CETBUILDTOOLS_DIR}/Modules
+			  $ENV{ARTDAQ_UTILITIES_DIR}/Modules
 	${CMAKE_MODULE_PATH})
 
 include(CetCMakeEnv)
@@ -65,6 +66,9 @@ add_subdirectory(artdaq-core-demo)
 
 # testing
 # add_subdirectory(test)
+
+# doc - Documentation
+add_subdirectory(doc)
 
 # ups - table and config files
 add_subdirectory(ups)
