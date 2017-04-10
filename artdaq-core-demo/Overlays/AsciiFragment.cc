@@ -5,9 +5,9 @@
 #if 0
 namespace {
   unsigned int pop_count (unsigned int n) {
-    unsigned int c; 
-    for (c = 0; n; c++) n &= n - 1; 
-    return c;
+	unsigned int c; 
+	for (c = 0; n; c++) n &= n - 1; 
+	return c;
   }
 }
 #endif
