@@ -54,6 +54,7 @@ find_ups_boost( v1_50_0 filesystem
                         program_options
                         unit_test_framework
  )
+find_ups_product( TRACE v3_03_00 )
 
 # macros for art_dictionary and simple_plugin
 include(CetTest)
