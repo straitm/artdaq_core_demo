@@ -18,7 +18,7 @@ fcldir      -
 
 #
 product		version		optional
-artdaq_core	v1_07_03
+artdaq_core	v1_07_04
 TRACE           v3_08_00        -nq-    only_for_build
 cetbuildtools	v5_06_07	-	only_for_build
 end_product_list
