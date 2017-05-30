@@ -9,7 +9,7 @@ namespace coredemo {
     artdaq::PackageBuildInfo pkg;
 
     pkg.setPackageName("artdaq-core-demo");
-    pkg.setPackageVersion("@version@");
+    pkg.setPackageVersion("@version_with_git@");
     pkg.setBuildTimestamp("@utcDateTime@");
 
     return pkg;
