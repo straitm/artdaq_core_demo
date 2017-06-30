@@ -47,5 +47,11 @@ namespace demo
 	 * \return Name of the given type (from the names vector)
 	 */
 	std::string fragmentTypeToString(FragmentType val);
+
+	/**
+	 * \brief Create a list of all Fragment types defined by this package, in the format that RawInput expects
+	 * \return A list of all Fragment types defined by this package, in the format that RawInput expects
+	 */
+	std::map<artdaq::Fragment::type_t, std::string> makeFragmentTypeMap();
 }
 #endif /* artdaq_demo_Overlays_FragmentType_hh */
