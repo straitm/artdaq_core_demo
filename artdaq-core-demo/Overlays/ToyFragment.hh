@@ -50,11 +50,11 @@ public:
 		// its size via the static "size_words" variable (
 		// ToyFragment::Metadata::size_words )
 
-		typedef uint32_t data_t; ///< Fundamental unit of data representation within the ToyFragment::Metadata
+		typedef uint64_t data_t; ///< Fundamental unit of data representation within the ToyFragment::Metadata
 
 		data_t board_serial_number : 16; ///< Serial number of the simulated board
 		data_t num_adc_bits : 8; ///< Number of ADC bits this simulated board uses
-		data_t unused : 8; ///< Unused
+		data_t unused : 40; ///< Unused
 
 		static size_t const size_words = 1ul; ///< Size of the ToyFragment::Metadata struct, in units of Metadata::data_t
 	};
