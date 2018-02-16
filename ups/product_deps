@@ -1,6 +1,6 @@
 # The parent line must be the first non-comment line in the file
 # This line defines the product name and version
-parent artdaq_core_demo		v1_06_07
+parent artdaq_core_demo		v1_06_08
 defaultqual	e14:s50
 
 # These optional lines define the installed directories where
@@ -18,7 +18,7 @@ fcldir      -
 
 #
 product		version		optional
-artdaq_core	v3_01_04
+artdaq_core	v3_01_05
 cetbuildtools	v7_00_02	-	only_for_build
 end_product_list
 
@@ -28,6 +28,8 @@ end_product_list
 # -nq- here means there is no qualifier
 # a "-" here means the dependent product is not required by the parent and will not be setup
 qualifier		artdaq_core
+e15:s64:prof            e15:s64:prof
+e15:s64:debug		e15:s64:debug
 e14:s50:prof            e14:s50:prof
 e14:s50:debug		e14:s50:debug
 e10:s46:prof            e10:s46:prof
