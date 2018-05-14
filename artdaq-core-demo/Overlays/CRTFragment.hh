@@ -183,7 +183,10 @@ public:
     }
 
     const unsigned int expect_size =
-      sizeof(header_t) + header()->nhit * sizeof(hit_t);
+      (sizeof(header_t) + header()->nhit * sizeof(hit_t)
+       + sizeof(artdaq::RawDataType) - 1)
+       /sizeof(artdaq::RawDataType)
+       *sizeof(artdaq::RawDataType);
 
     if(size() != expect_size){
       fprintf(stderr, "CRT fragment: N hit (%d -> %dB) mismatches size %uB\n",
@@ -191,10 +194,12 @@ public:
       for(char * c = (char *) thefrag.dataBeginBytes();
                  c < (char *)thefrag.dataEndBytes();
                  c++){
-        fprintf(stderr, "%02hhx %c ", (unsigned char)*c,
+        fprintf(stderr, "%02hhx/%c ", (unsigned char)*c,
                 isprint((unsigned char)*c)?(unsigned char)*c:'.');
-        if((c - (char*)thefrag.dataBeginBytes())%0x08 == 0x07) fprintf(stderr, " ");
-        if((c - (char*)thefrag.dataBeginBytes())%0x10 == 0x0f) fprintf(stderr, "\n");
+        if((c - (char*)thefrag.dataBeginBytes())%0x08 == 0x07)
+          fprintf(stderr, " ");
+        if((c - (char*)thefrag.dataBeginBytes())%0x10 == 0x0f)
+          fprintf(stderr, "\n");
       }
       fprintf(stderr, "\n");
       return false;
