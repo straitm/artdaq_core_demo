@@ -188,6 +188,14 @@ public:
     if(size() != expect_size){
       fprintf(stderr, "CRT fragment: N hit (%d -> %dB) mismatches size %uB\n",
               header()->nhit, expect_size, size());
+      for(char * c = (char *) thefrag.dataBeginBytes();
+                 c < (char *)thefrag.dataEndBytes();
+                 c++){
+        fprintf(stderr, "%02x ", *c);
+        if((c - (char*)thefrag.dataBeginBytes())%0x08 == 0) fprintf(stderr, " ");
+        if((c - (char*)thefrag.dataBeginBytes())%0x10 == 0) fprintf(stderr, "\n");
+      }
+      fprintf(stderr, "\n");
       return false;
     }
     return true;
