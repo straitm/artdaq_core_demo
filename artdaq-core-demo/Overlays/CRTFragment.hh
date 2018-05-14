@@ -76,7 +76,7 @@ public:
       return;
     }
 
-    printf("CRT header: Magic = \"'%c'\"\n"
+    printf("CRT header: Magic = '%c'\n"
            "            n hit = %2u\n"
            "            module = %5u\n"
            "            Unix time  = %10d (0x%8x)\n"
@@ -98,9 +98,9 @@ public:
       return;
     }
 
-    printf("CRT hit %2d: Magic = \"'%c'\"\n"
-           "             channel = %2u\n"
-           "             ADC     = %4hd\n",
+    printf("CRT hit %2d: Magic = '%c'\n"
+           "            channel = %2u\n"
+           "            ADC     = %4hd\n",
            i, hit(i)->magic, hit(i)->channel, hit(i)->adc);
   }
 
