@@ -191,9 +191,10 @@ public:
       for(char * c = (char *) thefrag.dataBeginBytes();
                  c < (char *)thefrag.dataEndBytes();
                  c++){
-        fprintf(stderr, "%02x ", *c);
-        if((c - (char*)thefrag.dataBeginBytes())%0x08 == 0) fprintf(stderr, " ");
-        if((c - (char*)thefrag.dataBeginBytes())%0x10 == 0) fprintf(stderr, "\n");
+        fprintf(stderr, "%02hhx %c ", (unsigned char)*c,
+                isprint((unsigned char)*c)?(unsigned char)*c:'.');
+        if((c - (char*)thefrag.dataBeginBytes())%0x08 == 0x07) fprintf(stderr, " ");
+        if((c - (char*)thefrag.dataBeginBytes())%0x10 == 0x0f) fprintf(stderr, "\n");
       }
       fprintf(stderr, "\n");
       return false;
