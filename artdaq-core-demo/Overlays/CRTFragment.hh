@@ -5,13 +5,12 @@
 
 #include <ostream>
 
-// XXX probably don't want this in "demo" anymore
-namespace demo
+namespace CRT
 {
-	class CRTFragment;
+	class Fragment;
 }
 
-class demo::CRTFragment
+class CRT::Fragment
 {
 public:
 
@@ -234,7 +233,7 @@ public:
     return reinterpret_cast<const header_t *>(thefrag.dataBeginBytes());
   }
 
-  explicit CRTFragment(artdaq::Fragment const& f) : thefrag(f) {}
+  explicit Fragment(artdaq::Fragment const& f) : thefrag(f) {}
 
 private:
   artdaq::Fragment const& thefrag;
