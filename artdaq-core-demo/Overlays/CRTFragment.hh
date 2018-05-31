@@ -1,3 +1,5 @@
+/* Author: Matthew Strait <mstrait@fnal.gov> */
+
 #ifndef artdaq_demo_Overlays_CRTFragment_hh
 #define artdaq_demo_Overlays_CRTFragment_hh
 
